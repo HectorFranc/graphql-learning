@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -e js,graphql"
+    "dev": "nodemon -e js,graphql",
+    "lint": "standard",
+    "lint-fix": "standard --fix"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,7 @@
     "graphql": "^15.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "standard": "^14.3.4"
   }
 }
