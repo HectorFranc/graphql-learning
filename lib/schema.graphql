@@ -1,3 +1,4 @@
+# Types
 type Course {
     _id: ID!
     title: String!
@@ -6,15 +7,32 @@ type Course {
     topic: String
 }
 
+type Student {
+    _id: ID!
+    name: String!
+    email: String!
+}
+
+# Queries
 type Query {
 
+    # Courses
     "Returns all courses"
     getCourses: [Course]
 
     "Return some course"
     getCourse(id: ID!): Course
+
+
+    # Students
+    "Returns all students"
+    getStudents: [Student]
+
+    "Return some student"
+    getStudent(id: ID!): Student
 }
 
+# Inputs
 input CourseInput {
     title: String!
     teacher: String
@@ -22,7 +40,19 @@ input CourseInput {
     topic: String
 }
 
+input StudentInput {
+    name: String!
+    email: String!
+}
+
+# Mutations
 type Mutation {
+
+    # Courses
     "Create a course"
     createCourse(input: CourseInput): Course
+
+    # Students
+    "Create a student"
+    createStudent(input: StudentInput): Student
 }
