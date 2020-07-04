@@ -21,6 +21,26 @@ class CoursesService {
 
         return collection.findOne({ _id: ObjectID(id)})
     }
+
+    async createCourse(data) {
+        let defaults = {
+            teacher: '',
+            topic: '',
+        }
+
+        data = {
+            ...defaults,
+            ...data
+        }
+
+        let collection = await this.connect()
+
+        let createdCourse = await collection.insertOne(data)
+
+        data._id = createdCourse.insertedId
+
+        return data
+    }
 }
 
 module.exports = CoursesService
