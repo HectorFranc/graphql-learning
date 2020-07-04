@@ -3,6 +3,7 @@ const express = require('express')
 const gqlMiddleware = require('express-graphql')
 
 const resolvers = require('./lib/resolvers')
+const errorHandler = require('./utils/errorHandler')
 
 const { readFileSync } = require('fs')
 const { join } = require('path')
@@ -24,7 +25,8 @@ const schema = makeExecutableSchema({
 app.use('/api', gqlMiddleware({
   schema: schema,
   rootValue: resolvers,
-  graphiql: true
+  graphiql: true,
+  customFormatErrorFn: errorHandler,
 }))
 
 app.listen(port, () => {
