@@ -1,5 +1,8 @@
 const MongoService = require('../lib/db')
+const StudentsService = require('./StudentsService')
 const { ObjectID } = require('mongodb')
+
+let studentsService = new StudentsService()
 
 class CoursesService {
     async connect() {
@@ -40,6 +43,33 @@ class CoursesService {
         data._id = createdCourse.insertedId
 
         return data
+    }
+
+    async addPersonToCourse(courseId, personId) {
+        let course = await this.getCourseById(courseId)
+        let student = await studentsService.getStudentById(personId)
+
+        if ( !course || !student ) throw new Error('Person/course doesn\'t exist')
+
+        let collection = await this.connect()
+
+        collection.updateOne(
+            { _id: ObjectID(courseId) },
+            { $addToSet: { people: ObjectID(personId) } }
+        )
+
+        return course
+    }
+
+    async getPeopleById( ids ) {
+        let studentsCollection = await studentsService.connect()
+
+        
+        let peopleData = (ids.length > 0)
+            ? await studentsCollection.find({ _id:{ $in: ids } }).toArray()
+            : []
+        
+        return peopleData
     }
 }
 
