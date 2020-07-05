@@ -1,3 +1,12 @@
+# Enums
+
+"Validates levels"
+enum Level {
+    basic
+    middle
+    advanced
+}
+
 # Types
 type Course {
     _id: ID!
@@ -6,6 +15,7 @@ type Course {
     description: String!
     topic: String
     people: [Student]
+    level: Level
 }
 
 type Student {
@@ -39,6 +49,7 @@ input CourseInput {
     teacher: String
     description: String!
     topic: String
+    level: Level
 }
 
 input StudentInput {
@@ -51,11 +62,11 @@ type Mutation {
 
     # Courses
     "Create a course"
-    createCourse(input: CourseInput): Course
+    createCourse(input: CourseInput!): Course
 
     # Students
     "Create a student"
-    createStudent(input: StudentInput): Student
+    createStudent(input: StudentInput!): Student
     
     "Add people to course"
     addPeople(courseID: ID!, personID: ID!): Course
