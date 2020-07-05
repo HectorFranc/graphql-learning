@@ -1,3 +1,10 @@
+# Interfaces
+interface Person {
+    _id: ID!
+    name: String!
+    email: String!
+}
+
 # Enums
 
 "Validates levels"
@@ -18,10 +25,20 @@ type Course {
     level: Level
 }
 
-type Student {
+type Student implements Person {
     _id: ID!
     name: String!
     email: String!
+
+    avatar: String
+}
+
+type Monitor implements Person {
+    _id: ID!
+    name: String!
+    email: String!
+
+    phone: String
 }
 
 # Queries
@@ -37,10 +54,10 @@ type Query {
 
     # Students
     "Returns all students"
-    getStudents: [Student]
+    getPeople: [Person]
 
     "Return some student"
-    getStudent(id: ID!): Student
+    getPerson(id: ID!): Person
 }
 
 # Inputs
@@ -52,9 +69,13 @@ input CourseInput {
     level: Level
 }
 
-input StudentInput {
+input PersonInput{
     name: String!
     email: String!
+
+    avatar: String
+
+    phone: String
 }
 
 # Mutations
@@ -65,9 +86,9 @@ type Mutation {
     createCourse(input: CourseInput!): Course
 
     # Students
-    "Create a student"
-    createStudent(input: StudentInput!): Student
+    "Create a person"
+    createPerson(input: PersonInput!): Person
     
-    "Add people to course"
-    addPeople(courseID: ID!, personID: ID!): Course
+    "Add person to course"
+    addPerson(courseID: ID!, personID: ID!): Course
 }
