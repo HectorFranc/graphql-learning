@@ -5,6 +5,9 @@ interface Person {
     email: String!
 }
 
+# Unions
+union GlobalSearch = Student | Monitor | Course
+
 # Enums
 
 "Validates levels"
@@ -58,6 +61,8 @@ type Query {
 
     "Return some student"
     getPerson(id: ID!): Person
+
+    searchItems(keyword: String!): [GlobalSearch]
 }
 
 # Inputs

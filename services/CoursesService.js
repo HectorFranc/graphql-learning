@@ -71,6 +71,15 @@ class CoursesService {
         
         return peopleData
     }
+
+    async search(keyword) {
+        let collection = await this.connect()
+        return await collection.find({
+            $text: {
+                $search: keyword
+            }
+        }).toArray()
+    }
 }
 
 module.exports = CoursesService
